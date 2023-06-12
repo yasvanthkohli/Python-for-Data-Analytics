@@ -90,9 +90,6 @@ print(df.shape)
 # Remove multiple columns by names
 columns_to_drop = ['snow', 'snowdepth']
 df_removed_columns = df.drop(columns_to_drop, axis=1)
-SyntaxError: multiple statements found while compiling a single statement
-columns_to_drop = ['snow', 'snowdepth']
-df_removed_columns = df.drop(columns_to_drop, axis=1)
 
 
 # Display the remaining columns
