@@ -1,9 +1,3 @@
-Python 3.11.3 (tags/v3.11.3:f3909b8, Apr  4 2023, 23:49:59) [MSC v.1934 64 bit (AMD64)] on win32
-Type "help", "copyright", "credits" or "license()" for more information.
->>> 
-= RESTART: C:/Users/admin/AppData/Local/Programs/Python/Python311/data cleaning and preprocessing.py
->>> 
-= RESTART: C:/Users/admin/AppData/Local/Programs/Python/Python311/data cleaning and preprocessing.py
 >>> import pandas as pd
 >>> 
 >>> # Load the weather data into a DataFrame
@@ -17,6 +11,9 @@ Type "help", "copyright", "credits" or "license()" for more information.
 4  Chennai  2023-05-01T04:00:00  ...  partly-cloudy-night  VOMM,43279099999,AUCE
 
 [5 rows x 24 columns]
+
+
+
 >>> df.tail()
         name             datetime  ...                 icon               stations
 739  Chennai  2023-05-31T19:00:00  ...  partly-cloudy-night  VOMM,43279099999,AUCE
@@ -26,6 +23,9 @@ Type "help", "copyright", "credits" or "license()" for more information.
 743  Chennai  2023-05-31T23:00:00  ...  partly-cloudy-night       VOMM,43279099999
 
 [5 rows x 24 columns]
+
+
+
 >>> df.info()
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 744 entries, 0 to 743
@@ -58,6 +58,9 @@ Data columns (total 24 columns):
  23  stations          744 non-null    object 
 dtypes: float64(14), int64(4), object(6)
 memory usage: 139.6+ KB
+      
+      
+      
 df.describe()
              temp   feelslike         dew  ...  solarenergy     uvindex  severerisk
 count  744.000000  744.000000  744.000000  ...   744.000000  744.000000  744.000000
@@ -70,6 +73,9 @@ min     24.900000   24.900000   21.500000  ...     0.000000    0.000000    3.000
 max     38.200000   53.100000   30.000000  ...     3.600000   10.000000  100.000000
 
 [8 rows x 18 columns]
+
+
+
 print(df.columns)
 Index(['name', 'datetime', 'temp', 'feelslike', 'dew', 'humidity', 'precip',
        'precipprob', 'preciptype', 'snow', 'snowdepth', 'windgust',
@@ -79,12 +85,16 @@ Index(['name', 'datetime', 'temp', 'feelslike', 'dew', 'humidity', 'precip',
       dtype='object')
 print(df.shape)
 (744, 24)
+
+
 # Remove multiple columns by names
 columns_to_drop = ['snow', 'snowdepth']
 df_removed_columns = df.drop(columns_to_drop, axis=1)
 SyntaxError: multiple statements found while compiling a single statement
 columns_to_drop = ['snow', 'snowdepth']
 df_removed_columns = df.drop(columns_to_drop, axis=1)
+
+
 # Display the remaining columns
 remaining_columns = df.columns
 print(remaining_columns)
@@ -109,11 +119,9 @@ print(df)
 743  Chennai  2023-05-31T23:00:00  ...  partly-cloudy-night       VOMM,43279099999
 
 [744 rows x 24 columns]
-df.drop('snow', 'snowdepth', axis=1, inplace=True)
-Traceback (most recent call last):
-  File "<pyshell#15>", line 1, in <module>
-    df.drop('snow', 'snowdepth', axis=1, inplace=True)
-TypeError: DataFrame.drop() takes from 1 to 2 positional arguments but 3 positional arguments (and 2 keyword-only arguments) were given
+
+
+
 df.drop('snow', axis=1, inplace=True)
 print(df)
         name             datetime  ...                 icon               stations
@@ -130,6 +138,8 @@ print(df)
 743  Chennai  2023-05-31T23:00:00  ...  partly-cloudy-night       VOMM,43279099999
 
 [744 rows x 23 columns]
+
+
 df.drop('snowdepth', axis=1, inplace=True)
 print(df)
         name             datetime  ...                 icon               stations
@@ -146,6 +156,8 @@ print(df)
 743  Chennai  2023-05-31T23:00:00  ...  partly-cloudy-night       VOMM,43279099999
 
 [744 rows x 22 columns]
+
+
 # Display the remaining columns
 remaining_columns = df.columns
 print(remaining_columns)
@@ -155,6 +167,9 @@ Index(['name', 'datetime', 'temp', 'feelslike', 'dew', 'humidity', 'precip',
        'solarenergy', 'uvindex', 'severerisk', 'conditions', 'icon',
        'stations'],
       dtype='object')
+
+
+
 
 # Data Formatting and Type Conversion
 df['datetime'] = pd.to_datetime(df['datetime'], format='%Y-%m-%dT%H:%M:%S')  # Specify datetime format
@@ -169,7 +184,11 @@ Index(['location', 'datetime', 'temp', 'feelslike', 'dew', 'humidity',
        'solarradiation', 'solarenergy', 'uvindex', 'severerisk', 'conditions',
        'icon', 'stations'],
       dtype='object')
+
+
+
 # Data Validation and Sanity Checks
+
 # Assuming 'precip' column should only contain non-negative values
 df['precip'] = df['precip'].clip(lower=0)
 # Display the changed 'precip' column   (clip() method allows to limit the values within a specific range)
@@ -186,8 +205,13 @@ print(df['precip'])
 742    0.0
 743    0.0
 Name: precip, Length: 744, dtype: float64
+                  
+         
+     
+                  
 # Feature Engineering
-df['day_of_week'] = df['datetime'].dt.dayofweek  # Extract the day of the week from the datetime
+# Extract the day of the week from the datetime
+df['day_of_week'] = df['datetime'].dt.dayofweek  
 print(df[['datetime', 'day_of_week']])
                datetime  day_of_week
 0   2023-05-01 00:00:00            0
@@ -203,182 +227,9 @@ print(df[['datetime', 'day_of_week']])
 743 2023-05-31 23:00:00            2
 
 [744 rows x 2 columns]
-# Resample data to daily averages
-df_daily = df.resample('D', on='datetime').mean()
-Traceback (most recent call last):
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1490, in array_func
-    result = self.grouper._cython_operation(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 959, in _cython_operation
-    return cy_op.cython_operation(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 657, in cython_operation
-    return self._cython_op_ndim_compat(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 497, in _cython_op_ndim_compat
-    return self._call_cython_op(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 541, in _call_cython_op
-    func = self._get_cython_function(self.kind, self.how, values.dtype, is_numeric)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 173, in _get_cython_function
-    raise NotImplementedError(
-NotImplementedError: function is not implemented for this dtype: [how->mean,dtype->object]
 
-During handling of the above exception, another exception occurred:
 
-Traceback (most recent call last):
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 1692, in _ensure_numeric
-    x = float(x)
-ValueError: could not convert string to float: 'ChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennai'
 
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 1696, in _ensure_numeric
-    x = complex(x)
-ValueError: complex() arg is a malformed string
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "<pyshell#30>", line 2, in <module>
-    df_daily = df.resample('D', on='datetime').mean()
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\resample.py", line 979, in mean
-    return self._downsample("mean", numeric_only=numeric_only)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\resample.py", line 1297, in _downsample
-    result = obj.groupby(self.grouper, axis=self.axis).aggregate(how, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\generic.py", line 1269, in aggregate
-    result = op.agg()
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 160, in agg
-    return self.apply_str()
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 496, in apply_str
-    return self._try_aggregate_string_function(obj, f, *self.args, **self.kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 565, in _try_aggregate_string_function
-    return f(*args, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1855, in mean
-    result = self._cython_agg_general(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1507, in _cython_agg_general
-    new_mgr = data.grouped_reduce(array_func)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 1503, in grouped_reduce
-    applied = sb.apply(func)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\blocks.py", line 329, in apply
-    result = func(self.values, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1503, in array_func
-    result = self._agg_py_fallback(values, ndim=data.ndim, alt=alt)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1457, in _agg_py_fallback
-    res_values = self.grouper.agg_series(ser, alt, preserve_dtype=True)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 994, in agg_series
-    result = self._aggregate_series_pure_python(obj, func)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 1015, in _aggregate_series_pure_python
-    res = func(group)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1857, in <lambda>
-    alt=lambda x: Series(x).mean(numeric_only=numeric_only),
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 11556, in mean
-    return NDFrame.mean(self, axis, skipna, numeric_only, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 11201, in mean
-    return self._stat_function(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 11158, in _stat_function
-    return self._reduce(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 4670, in _reduce
-    return op(delegate, skipna=skipna, **kwds)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 96, in _f
-    return f(*args, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 158, in f
-    result = alt(values, axis=axis, skipna=skipna, **kwds)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 421, in new_func
-    result = func(values, axis=axis, skipna=skipna, mask=mask, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 727, in nanmean
-    the_sum = _ensure_numeric(values.sum(axis, dtype=dtype_sum))
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 1699, in _ensure_numeric
-    raise TypeError(f"Could not convert {x} to numeric") from err
-TypeError: Could not convert ChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennai to numeric
-# Data Sampling and Resampling
-df_daily = df.resample('D', on='datetime').mean()  # Resample data to daily averages
-print(df_daily.head())
-  
-SyntaxError: multiple statements found while compiling a single statement
-# Data Sampling and Resampling
-df_daily = df.resample('D', on='datetime').mean()
-  
-Traceback (most recent call last):
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1490, in array_func
-    result = self.grouper._cython_operation(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 959, in _cython_operation
-    return cy_op.cython_operation(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 657, in cython_operation
-    return self._cython_op_ndim_compat(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 497, in _cython_op_ndim_compat
-    return self._call_cython_op(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 541, in _call_cython_op
-    func = self._get_cython_function(self.kind, self.how, values.dtype, is_numeric)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 173, in _get_cython_function
-    raise NotImplementedError(
-NotImplementedError: function is not implemented for this dtype: [how->mean,dtype->object]
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 1692, in _ensure_numeric
-    x = float(x)
-ValueError: could not convert string to float: 'ChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennai'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 1696, in _ensure_numeric
-    x = complex(x)
-ValueError: complex() arg is a malformed string
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "<pyshell#32>", line 2, in <module>
-    df_daily = df.resample('D', on='datetime').mean()
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\resample.py", line 979, in mean
-    return self._downsample("mean", numeric_only=numeric_only)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\resample.py", line 1297, in _downsample
-    result = obj.groupby(self.grouper, axis=self.axis).aggregate(how, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\generic.py", line 1269, in aggregate
-    result = op.agg()
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 160, in agg
-    return self.apply_str()
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 496, in apply_str
-    return self._try_aggregate_string_function(obj, f, *self.args, **self.kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\apply.py", line 565, in _try_aggregate_string_function
-    return f(*args, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1855, in mean
-    result = self._cython_agg_general(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1507, in _cython_agg_general
-    new_mgr = data.grouped_reduce(array_func)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 1503, in grouped_reduce
-    applied = sb.apply(func)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\blocks.py", line 329, in apply
-    result = func(self.values, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1503, in array_func
-    result = self._agg_py_fallback(values, ndim=data.ndim, alt=alt)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1457, in _agg_py_fallback
-    res_values = self.grouper.agg_series(ser, alt, preserve_dtype=True)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 994, in agg_series
-    result = self._aggregate_series_pure_python(obj, func)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 1015, in _aggregate_series_pure_python
-    res = func(group)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1857, in <lambda>
-    alt=lambda x: Series(x).mean(numeric_only=numeric_only),
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 11556, in mean
-    return NDFrame.mean(self, axis, skipna, numeric_only, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 11201, in mean
-    return self._stat_function(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 11158, in _stat_function
-    return self._reduce(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 4670, in _reduce
-    return op(delegate, skipna=skipna, **kwds)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 96, in _f
-    return f(*args, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 158, in f
-    result = alt(values, axis=axis, skipna=skipna, **kwds)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 421, in new_func
-    result = func(values, axis=axis, skipna=skipna, mask=mask, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 727, in nanmean
-    the_sum = _ensure_numeric(values.sum(axis, dtype=dtype_sum))
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 1699, in _ensure_numeric
-    raise TypeError(f"Could not convert {x} to numeric") from err
-TypeError: Could not convert ChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennai to numeric
 # Check for inconsistent data values
 
 # Check if temperature is within a valid range
@@ -392,6 +243,11 @@ print(invalid_temp)
 Empty DataFrame
 Columns: [location, datetime, temp, feelslike, dew, humidity, precip, precipprob, preciptype, windgust, windspeed, winddir, sealevelpressure, cloudcover, visibility, solarradiation, solarenergy, uvindex, severerisk, conditions, icon, stations, day_of_week]
 Index: []
+      
+      
+      
+      
+      
 # Check if humidity is within a valid range
 invalid_humidity = df[(df['humidity'] < 0) | (df['humidity'] > 100)]
   
@@ -404,6 +260,10 @@ print(invalid_humidity)
 Empty DataFrame
 Columns: [location, datetime, temp, feelslike, dew, humidity, precip, precipprob, preciptype, windgust, windspeed, winddir, sealevelpressure, cloudcover, visibility, solarradiation, solarenergy, uvindex, severerisk, conditions, icon, stations, day_of_week]
 Index: []
+      
+      
+      
+      
 # Check if any required columns have missing values
 missing_columns = df.columns[df.isnull().any()].tolist()
   
@@ -412,13 +272,13 @@ print("Columns with missing values:")
 Columns with missing values:
 print("Columns with missing values:")
 print(missing_columns)
-  
-SyntaxError: multiple statements found while compiling a single statement
-
-print(missing_columns)
 ['preciptype']
+
+
+
 # Replace missing values in 'preciptype' column with 0
 df['preciptype'].fillna(0, inplace=True)
+
 # Print the updated DataFrame
 print(df)
     location            datetime  ...               stations  day_of_week
@@ -435,21 +295,24 @@ print(df)
 743  Chennai 2023-05-31 23:00:00  ...       VOMM,43279099999            2
 
 [744 rows x 23 columns]
+
+
 # Check if any required columns have missing values
 missing_columns = df.columns[df.isnull().any()].tolist()
 print(missing_columns)
 []
+
+
 # Check for missing data in specific columns
 missing_data = df[df['datetime'].isnull() | df['temp'].isnull()]
 print(missing_data)
 Empty DataFrame
 Columns: [location, datetime, temp, feelslike, dew, humidity, precip, precipprob, preciptype, windgust, windspeed, winddir, sealevelpressure, cloudcover, visibility, solarradiation, solarenergy, uvindex, severerisk, conditions, icon, stations, day_of_week]
 Index: []
-# Identify missing timestamps within a specific time range
-start_date = pd.to_datetime('2023-05-01')
-end_date = pd.to_datetime('2023-05-31')
-SyntaxError: multiple statements found while compiling a single statement
-KeyboardInterrupt
+      
+
+     
+      
 # Identify missing timestamps within a specific time range
 start_date = pd.to_datetime('2023-05-01')
 end_date = pd.to_datetime('2023-05-31')
@@ -472,6 +335,8 @@ print(df)
 743  Chennai 2023-05-31 23:00:00  ...       VOMM,43279099999            2
 
 [744 rows x 23 columns]
+
+
 print(df.columns)
 Index(['location', 'datetime', 'temp', 'feelslike', 'dew', 'humidity',
        'precip', 'precipprob', 'preciptype', 'windgust', 'windspeed',
@@ -479,8 +344,12 @@ Index(['location', 'datetime', 'temp', 'feelslike', 'dew', 'humidity',
        'solarradiation', 'solarenergy', 'uvindex', 'severerisk', 'conditions',
        'icon', 'stations', 'day_of_week'],
       dtype='object')
+
+
 print(df.shape)
 (744, 23)
+
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -556,6 +425,7 @@ memory usage: 130.9+ KB
 None
 
 
+
 # Histogram of temperature distribution
 plt.hist(df['temp'], bins=20)
 (array([  3.,   4.,   6.,  26.,  13.,  38.,  60., 107., 105.,  90.,  53.,
@@ -588,20 +458,8 @@ plt.show()
 
 
 
-# Scatter plot of temperature vs. humidity
-sns.scatterplot(data=df, x='humidity', y='temp')
-Traceback (most recent call last):
-  File "<pyshell#92>", line 2, in <module>
-    sns.scatterplot(data=df, x='humidity', y='temp')
-NameError: name 'sns' is not defined
 
-
-# Scatter plot of temperature vs. humidity
-plt.scatterplot(data=df, x='humidity', y='temp')
-Traceback (most recent call last):
-  File "<pyshell#95>", line 2, in <module>
-    plt.scatterplot(data=df, x='humidity', y='temp')
-AttributeError: module 'matplotlib.pyplot' has no attribute 'scatterplot'
+      
 import seaborn as sns
 
 # Scatter plot of temperature vs. humidity
@@ -635,26 +493,6 @@ plt.show()
 # Interactive line plot of temperature over time using Plotly
 fig = px.line(df, x='datetime', y='temp', title='Temperature Variation over Time')
 fig.show()
-fig.show()
-
-
-# Compute correlation matrix
-correlation_matrix = df.corr()
-Traceback (most recent call last):
-  File "<pyshell#119>", line 2, in <module>
-    correlation_matrix = df.corr()
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 10054, in corr
-    mat = data.to_numpy(dtype=float, na_value=np.nan, copy=False)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\frame.py", line 1838, in to_numpy
-    result = self._mgr.as_array(dtype=dtype, copy=copy, na_value=na_value)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 1732, in as_array
-    arr = self._interleave(dtype=dtype, na_value=na_value)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 1794, in _interleave
-    result[rl.indexer] = arr
-ValueError: could not convert string to float: 'Chennai'
-#Time Series Analysis: Plot a line chart of temperature variations over time with a rolling average:
-ValueError: could not convert string to float: 'Chennai'
-SyntaxError: invalid syntax
 
 
 
@@ -680,6 +518,7 @@ plt.legend()
 plt.show()
 
 
+
 # Create a heatmap to visualize the correlation between multiple weather variables
 correlation_matrix = df[['temp', 'humidity', 'precip', 'windspeed']].corr()
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
@@ -689,79 +528,8 @@ Text(0.5, 1.0, 'Correlation Heatmap')
 plt.show()
 
 
-# Time-based Aggregations
-df_hourly = df.groupby(df.index.hour).mean()
-Traceback (most recent call last):
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1490, in array_func
-    result = self.grouper._cython_operation(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 959, in _cython_operation
-    return cy_op.cython_operation(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 657, in cython_operation
-    return self._cython_op_ndim_compat(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 497, in _cython_op_ndim_compat
-    return self._call_cython_op(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 541, in _call_cython_op
-    func = self._get_cython_function(self.kind, self.how, values.dtype, is_numeric)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 173, in _get_cython_function
-    raise NotImplementedError(
-NotImplementedError: function is not implemented for this dtype: [how->mean,dtype->object]
 
-During handling of the above exception, another exception occurred:
 
-Traceback (most recent call last):
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 1692, in _ensure_numeric
-    x = float(x)
-ValueError: could not convert string to float: 'ChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennai'
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 1696, in _ensure_numeric
-    x = complex(x)
-ValueError: complex() arg is a malformed string
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "<pyshell#145>", line 1, in <module>
-    df_hourly = df.groupby(df.index.hour).mean()
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1855, in mean
-    result = self._cython_agg_general(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1507, in _cython_agg_general
-    new_mgr = data.grouped_reduce(array_func)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\managers.py", line 1503, in grouped_reduce
-    applied = sb.apply(func)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\internals\blocks.py", line 329, in apply
-    result = func(self.values, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1503, in array_func
-    result = self._agg_py_fallback(values, ndim=data.ndim, alt=alt)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1457, in _agg_py_fallback
-    res_values = self.grouper.agg_series(ser, alt, preserve_dtype=True)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 994, in agg_series
-    result = self._aggregate_series_pure_python(obj, func)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\ops.py", line 1015, in _aggregate_series_pure_python
-    res = func(group)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\groupby\groupby.py", line 1857, in <lambda>
-    alt=lambda x: Series(x).mean(numeric_only=numeric_only),
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 11556, in mean
-    return NDFrame.mean(self, axis, skipna, numeric_only, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 11201, in mean
-    return self._stat_function(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\generic.py", line 11158, in _stat_function
-    return self._reduce(
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\series.py", line 4670, in _reduce
-    return op(delegate, skipna=skipna, **kwds)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 96, in _f
-    return f(*args, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 158, in f
-    result = alt(values, axis=axis, skipna=skipna, **kwds)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 421, in new_func
-    result = func(values, axis=axis, skipna=skipna, mask=mask, **kwargs)
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 727, in nanmean
-    the_sum = _ensure_numeric(values.sum(axis, dtype=dtype_sum))
-  File "C:\Users\admin\AppData\Local\Programs\Python\Python311\Lib\site-packages\pandas\core\nanops.py", line 1699, in _ensure_numeric
-    raise TypeError(f"Could not convert {x} to numeric") from err
-TypeError: Could not convert ChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennaiChennai to numeric
 from statsmodels.tsa.seasonal import seasonal_decompose
 result = seasonal_decompose(df['temp'], model='additive', period=12)
 result.plot()
