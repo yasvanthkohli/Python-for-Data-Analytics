@@ -353,12 +353,7 @@ print(df.shape)
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-Traceback (most recent call last):
-  File "<pyshell#59>", line 1, in <module>
-    import seaborn as sns
-ModuleNotFoundError: No module named 'seaborn'
 import plotly.express as px
-
 
 
 
